@@ -5,8 +5,19 @@ import java.util.*;
 import static model.ServerTypes.*;
 import static model.Constants.*;
 
-//Seeds server data into regions
+
 public class Region {
+
+    private final String name;
+
+    private List<Server> servers;
+
+    public Region(String name, List<Server> servers) {
+        this.name = name;
+        this.servers = servers;
+    }
+
+
 
 
     public static List<Server> getRegionalServers(String region) {

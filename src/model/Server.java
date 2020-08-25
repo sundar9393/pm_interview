@@ -29,10 +29,10 @@ public class Server implements Comparable<Server> {
 
     @Override
     public int compareTo(Server server) {
-        double cost1 = server.getCost();
-        double cost2 = this.getCost();
+        Double cost1 = server.getCost();
+        Double cost2 = this.getCost();
 
-        return cost2 < cost1 ? -1 : (cost2 == cost1 ? 0 : 1);
+        return cost2.compareTo(cost1);
 
     }
 }
