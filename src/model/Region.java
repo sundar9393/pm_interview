@@ -18,6 +18,7 @@ public class Region {
 
     }
 
+    //Util method to get server cost based on region
     public static double serverCost(int hours, Map<ServerTypes, Integer> serverList, String region) {
         List<Server> regionalServerList = getRegionalServers(region);
         double cost = 0;

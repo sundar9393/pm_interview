@@ -2,13 +2,13 @@ package model;
 
 import java.util.Map;
 
-public class AllocatorResponse {
+public class AllocatorResponse implements Comparable<AllocatorResponse> {
 
-    String region;
+    private String region;
 
-    double total_cost;
+    private double total_cost;
 
-    Map<String, Integer> servers;
+    private Map<String, Integer> servers;
 
     public AllocatorResponse() {
     }
@@ -45,6 +45,13 @@ public class AllocatorResponse {
 
     @Override
     public String toString() {
-        return this.getRegion()+"\n"+this.total_cost;
+        return this.getRegion()+"\n"+this.total_cost+"\n"+servers.toString();
+    }
+
+    @Override
+    public int compareTo(AllocatorResponse o) {
+        Double cost1 = o.getTotal_cost();
+        Double cost2 = this.getTotal_cost();
+        return cost2.compareTo(cost1);
     }
 }
