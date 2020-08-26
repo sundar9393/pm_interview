@@ -66,16 +66,13 @@ public class CpuAllocatorService {
                 for(int j = len-1; j >=0; j--) {
                     Server s1 = regionalServers.get(j);
                     int serverSize = s1.getType().getCpus();
-                    //if the server has cpus less than whats required it is chosen
-                    if( serverSize <= cpuRequired) {
-                        //add ServerType to hashmap
-                        chosenServers.put(s1.getType(), chosenServers.getOrDefault(s1.getType(),0)+1);
-                        //reduce cpu requiredcount
-                        cpuRequired -= serverSize;
-                        //break from for loop
-                        break;
-
+                    int noOfServers;
+                    if(serverSize <= cpuRequired) {
+                        noOfServers = cpuRequired/serverSize;
+                        cpuRequired -= noOfServers*serverSize;
+                        chosenServers.put(s1.getType(),chosenServers.getOrDefault(s1.getType(),0)+noOfServers);
                     }
+                    
                 }
 
             }
