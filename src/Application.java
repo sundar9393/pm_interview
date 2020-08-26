@@ -21,12 +21,12 @@ public class Application {
 
     public static void main(String[] args) {
 
-        List<AllocatorResponse> cpus = get_costs(20,0,49);
+        List<AllocatorResponse> cpus = get_costs(20,100,0);
 
         Collections.sort(cpus);
         //I need to print them in JSON format
         for(AllocatorResponse response: cpus) {
-            System.out.println(response);
+            System.out.println(new Gson().toJson(response));
         }
 
     }

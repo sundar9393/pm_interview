@@ -37,6 +37,9 @@ public class AllocatorCommonUtil {
     }
 
 
+    /*
+    Utility methods that returns the cost for certain hours for the given list of serverTypes specific to a region
+     */
     public static final double serverCostByRegion(int hours, Map<ServerTypes, Integer> serverList, String regionName) {
 
         Region region = RegionFactory.getRegion(regionName);

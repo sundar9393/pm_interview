@@ -72,7 +72,7 @@ public class CpuAllocatorService {
                         cpuRequired -= noOfServers*serverSize;
                         chosenServers.put(s1.getType(),chosenServers.getOrDefault(s1.getType(),0)+noOfServers);
                     }
-                    
+
                 }
 
             }
