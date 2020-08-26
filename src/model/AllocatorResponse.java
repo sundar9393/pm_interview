@@ -4,14 +4,11 @@ import java.util.Map;
 
 public class AllocatorResponse implements Comparable<AllocatorResponse> {
 
-    private String region;
+    private final String region;
 
-    private double total_cost;
+    private final double total_cost;
 
-    private Map<String, Integer> servers;
-
-    public AllocatorResponse() {
-    }
+    private final Map<String, Integer> servers;
 
     public AllocatorResponse(String region, double total_cost, Map<String, Integer> servers) {
         this.region = region;
@@ -23,24 +20,12 @@ public class AllocatorResponse implements Comparable<AllocatorResponse> {
         return region;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
     public double getTotal_cost() {
         return total_cost;
     }
 
-    public void setTotal_cost(double total_cost) {
-        this.total_cost = total_cost;
-    }
-
     public Map<String, Integer> getServers() {
         return servers;
-    }
-
-    public void setServers(Map<String, Integer> servers) {
-        this.servers = servers;
     }
 
     @Override

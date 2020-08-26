@@ -15,7 +15,7 @@ public class RegionFactory {
     /*
     Factory method that creates region objects based on regionName input parameter
      */
-    public final Region getRegion(String regionName) {
+    public static final Region getRegion(String regionName) {
 
         if(regionName == null) return null;
 
