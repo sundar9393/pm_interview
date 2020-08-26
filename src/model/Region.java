@@ -2,19 +2,19 @@ package model;
 
 import java.util.*;
 
-import static model.ServerTypes.*;
-import static model.Constants.*;
-
 
 public class Region {
 
     private final String name;
 
-    private List<Server> servers;
+    private final List<Server> servers;
 
     public Region(String name, List<Server> servers) {
+
         this.name = name;
-        this.servers = servers;
+        //Sort the list before saving
+        servers.sort(Comparator.comparing(Server::getCpus));
+        this.servers = new LinkedList<>(servers);
     }
 
     public String getName() {
@@ -22,11 +22,17 @@ public class Region {
     }
 
     public List<Server> getServers() {
-        return servers;
+        return new LinkedList<>(servers);
     }
 
-    public void setServers(List<Server> servers) {
-        this.servers = servers;
+    public boolean addServer(Server server) {
+
+        if(!servers.contains(server)) {
+            servers.add(server);
+            servers.sort(Comparator.comparing(Server::getCpus));
+            return true;
+        }
+        return false;
     }
 
 

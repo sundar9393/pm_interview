@@ -1,16 +1,21 @@
-package model;
+package util;
+
+import model.Region;
+import model.Server;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static model.Constants.*;
-import static model.ServerTypes.*;
+import static model.ServerType.*;
 
 /*
 Factory class to create regions with enlisted servers and corresponding prices
  */
 public class RegionFactory {
 
+    private static final String US_EAST = "us-east";
+    private static final String US_WEST = "us-west";
+    private static final String ASIA = "asia";
 
     /*
     Factory method that creates region objects based on regionName input parameter
@@ -83,4 +88,5 @@ public class RegionFactory {
 
         return region;
     }
+
 }

@@ -21,7 +21,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        List<AllocatorResponse> cpus = get_costs(7,214,500);
+        List<AllocatorResponse> cpus = get_costs(7,214,95);
 
         Collections.sort(cpus);
         //I need to print them in JSON format

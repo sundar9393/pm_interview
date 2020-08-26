@@ -1,6 +1,6 @@
 package model;
 
-public enum ServerTypes {
+public enum ServerType {
 
     LARGE(1),
     LARGE_X(2),
@@ -12,7 +12,7 @@ public enum ServerTypes {
 
     private final int cpus;
 
-    private ServerTypes(int cpus) {
+    private ServerType(int cpus) {
         this.cpus = cpus;
     }
 

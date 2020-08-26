@@ -2,28 +2,28 @@ package model;
 
 public class Server implements Comparable<Server> {
 
-    ServerTypes type;
+    private final ServerType type;
 
-    double cost;
+    private double cost;
 
-    public Server(ServerTypes type, double cost) {
+    public Server(ServerType type, double cost) {
         this.type = type;
         this.cost = cost;
-    }
-
-    public ServerTypes getType() {
-        return type;
-    }
-
-    public void setType(ServerTypes type) {
-        this.type = type;
     }
 
     public double getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public ServerType getType() {
+        return type;
+    }
+
+    public Integer getCpus() {
+        return this.type.getCpus();
+    }
+
+    public void updateCost(double cost) {
         this.cost = cost;
     }
 
@@ -34,5 +34,14 @@ public class Server implements Comparable<Server> {
 
         return cost2.compareTo(cost1);
 
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Server) {
+            Server s1 = (Server)obj;
+            this.getType().equals(s1.getType());
+        }
+        return false;
     }
 }
