@@ -14,7 +14,7 @@ public class CpuAllocatorService {
     This method selects the optimum number of servers from every region to cater the no of cpus requested
     & calculates the cost for them based on region.
      */
-    public static List<AllocatorResponse> getCpus(int cpu, int hours) {
+    public final static List<AllocatorResponse> getCpus(int cpu, int hours) {
 
         //Create a list of return objects
         List<AllocatorResponse> allocatorResponses = new LinkedList<>();
@@ -86,7 +86,7 @@ public class CpuAllocatorService {
     This method calculates maximum CPUS that can be rendered for the specified hours
     costing not more than the capping on cost.
      */
-    public static List<AllocatorResponse> getCpusByCostAndHours(double cost, int hours) {
+    public final static List<AllocatorResponse> getCpusByCostAndHours(double cost, int hours) {
         //The methods returns CPUS based on cost || hours which ever breaches first
         //Tries to return max CPUS possible
 
@@ -147,6 +147,37 @@ public class CpuAllocatorService {
 
 
         return allocatorResponses;
+    }
+
+    /*
+    The method returns regions which can provide the demanded number of cpus within the cost constraint.
+     */
+    public final static List<AllocatorResponse> getCpusByNumbersHoursAndCost(int cpus, int hours, double cost) {
+
+        //Create a list of return objects
+        List<AllocatorResponse> allocatorResponses = new LinkedList<>();
+
+        Map<String, Map<ServerTypes, Integer>> serversList = getServersToMatchCpus(cpus);
+
+        serversList.forEach((key,value) -> {
+
+            double totalCost = AllocatorCommonUtil.serverCostByRegion(hours, value, key);
+
+            if(totalCost < cost) {
+                //Rounding to 2 decimal spaces
+                DecimalFormat df = new DecimalFormat("#.##");
+                totalCost = Double.valueOf(df.format(totalCost));
+
+                AllocatorResponse allocatorResponse = new AllocatorResponse(key,totalCost,
+                        AllocatorCommonUtil.getSortedServers(value));
+
+                allocatorResponses.add(allocatorResponse);
+            }
+
+        });
+
+        return allocatorResponses;
+
     }
 
 

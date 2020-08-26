@@ -12,8 +12,8 @@ public class Application {
             return CpuAllocatorService.getCpus(cpus,hours);
         } else if(price != 0 && hours !=0 && cpus == 0) {
             return CpuAllocatorService.getCpusByCostAndHours(price,hours);
-        } else {
-
+        } else if(price != 0 && hours !=0 && cpus != 0){
+            return CpuAllocatorService.getCpusByNumbersHoursAndCost(cpus,hours,price);
         }
         return null;
     }
@@ -21,7 +21,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        List<AllocatorResponse> cpus = get_costs(20,100,0);
+        List<AllocatorResponse> cpus = get_costs(7,214,500);
 
         Collections.sort(cpus);
         //I need to print them in JSON format
