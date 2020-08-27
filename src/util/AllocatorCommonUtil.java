@@ -19,17 +19,13 @@ public class AllocatorCommonUtil {
         double cost = 0;
 
 
-        for(Map.Entry<ServerType, Integer> entry: serverList.entrySet()) {
+        for(Server server: servers) {
 
-            ServerType serverType = entry.getKey();
-
-            Optional<Server> server = servers.stream().
-                    filter(f -> f.getType().name().equalsIgnoreCase(serverType.name())).findFirst();
-
-            if(server.isPresent()) {
-                cost += server.get().getCost() * entry.getValue();
+            if(serverList.containsKey(server.getType())) {
+                cost += server.getCost() * serverList.get(server.getType());
             }
         }
+
         return cost*hours;
     }
 
@@ -55,7 +51,7 @@ public class AllocatorCommonUtil {
         int totalCount = 0;
 
         for(Map.Entry<String,Integer> entry: servers.entrySet()) {
-            ServerType serverType = ServerType.getServerType(entry.getKey());
+            ServerType serverType = ServerType.valueOf(entry.getKey().toUpperCase());
             if(null != serverType) {
                 totalCount += serverType.getCpus()*entry.getValue();
             }

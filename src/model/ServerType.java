@@ -21,30 +21,4 @@ public enum ServerType {
     }
 
 
-
-    public static ServerType getServerType(String serverType) {
-
-        if (null == serverType) return null;
-
-        switch (serverType.toLowerCase()) {
-            case "large":
-                return LARGE;
-            case "large_x":
-                return LARGE_X;
-            case "large_2x" :
-                return LARGE_2X;
-            case "large_4x":
-                return LARGE_4X;
-            case "large_8x":
-                return LARGE_8X;
-            case "large_10x":
-                return LARGE_10X;
-            default:
-                return null;
-        }
-
-    }
-
-
-
 }
