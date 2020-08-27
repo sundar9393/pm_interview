@@ -9,7 +9,7 @@ public final class AllocatorResponse implements Comparable<AllocatorResponse> {
 
     private final double total_cost;
 
-    private final LinkedHashMap<String, Integer> servers;
+    private final Map<String, Integer> servers;
 
     public AllocatorResponse(String region, double total_cost, Map<ServerType, Integer> servers) {
         this.region = region;
@@ -25,7 +25,7 @@ public final class AllocatorResponse implements Comparable<AllocatorResponse> {
         return total_cost;
     }
 
-    public LinkedHashMap<String, Integer> getServers() {
+    public Map<String, Integer> getServers() {
         return new LinkedHashMap<String, Integer>(servers);
     }
 
@@ -50,10 +50,10 @@ public final class AllocatorResponse implements Comparable<AllocatorResponse> {
     /*
    Utility method to sort the Map<ServerType, Count> based on count of servers
     */
-    private final Map<String, Integer> getSortedServers(Map<ServerType, Integer> regionalServerChoices) {
+    private final LinkedHashMap<String, Integer> getSortedServers(Map<ServerType, Integer> regionalServerChoices) {
 
         //Create a list of return objects
-        Map<String, Integer> sortedServers = new LinkedHashMap<>();
+        LinkedHashMap<String, Integer> sortedServers = new LinkedHashMap<>();
 
         //Copy Map.entry to a list and sort them
         List<Map.Entry<ServerType, Integer> > list =
@@ -72,5 +72,15 @@ public final class AllocatorResponse implements Comparable<AllocatorResponse> {
         }
 
         return sortedServers;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof AllocatorResponse) {
+            AllocatorResponse response1 = (AllocatorResponse)obj;
+            return this.getRegion().equalsIgnoreCase(response1.getRegion());
+        }
+        return false;
     }
 }

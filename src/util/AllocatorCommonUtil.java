@@ -29,14 +29,13 @@ public class AllocatorCommonUtil {
             if(server.isPresent()) {
                 cost += server.get().getCost() * entry.getValue();
             }
-
         }
-
         return cost*hours;
     }
 
     /*
     Returns total number of cpus in the given servers
+    Takes in a Map with ServerType enum as Key in input
      */
     public static final int getCpuCount(Map<ServerType, Integer> servers) {
         int totalCount = 0;
@@ -48,5 +47,21 @@ public class AllocatorCommonUtil {
         return totalCount;
     }
 
+    /*
+    Returns total number of cpus in the given servers
+    Takes in a Map with String as Key in input
+     */
+    public static final int getCpuCount_1(Map<String, Integer> servers) {
+        int totalCount = 0;
+
+        for(Map.Entry<String,Integer> entry: servers.entrySet()) {
+            ServerType serverType = ServerType.getServerType(entry.getKey());
+            if(null != serverType) {
+                totalCount += serverType.getCpus()*entry.getValue();
+            }
+        }
+
+        return totalCount;
+    }
 
 }

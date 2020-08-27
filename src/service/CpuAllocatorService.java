@@ -111,14 +111,14 @@ public class CpuAllocatorService {
             int len = regionalServers.size();
 
             double moneyLeft = cost;
-            //Itetare servers starting from one with max capacity
+            //Iterate servers starting from one with max capacity
             for(int j = len-1; j>=0; j--) {
 
                 Server s1 = regionalServers.get(j);
                 double costPerHour = s1.getCost();
-                //Keep adding maximum numbers of particular server possible till I cannot be added for even an hour
+                //Keep adding maximum number of particular server possible till It cannot be added for even an hour
                 for(int h = hours; h >=1; h--) {
-                    while(h*costPerHour < moneyLeft) {
+                    while(h*costPerHour <= moneyLeft) {
                         //Add server to chosen servers map
                         chosenServers.put(s1.getType(), chosenServers.getOrDefault(s1.getType(), 0)+h);
                         //update moneyleft
@@ -141,26 +141,41 @@ public class CpuAllocatorService {
         //Create a list of return objects
         List<AllocatorResponse> allocatorResponses = new LinkedList<>();
 
-        Map<String, Map<ServerType, Integer>> serversList = getServersToMatchCpus(cpus);
-        Map<String, Map<ServerType, Integer>> serverList1 = getCpusForHoursAndCost(hours, cost);
         //From serverlist1 i need to choose the ones that cost me less (no of cpus and hours are handled already)
         //From serverlist2 I need to choose the ones with more cpus (cost and hours are handled already)
+        Map<String, Map<ServerType, Integer>> serversListMatchingCpuCount = getServersToMatchCpus(cpus);
+        Map<String, Map<ServerType, Integer>> serversListMatchingCostAndHours = getCpusForHoursAndCost(hours, cost);
 
-        serversList.forEach((key,value)-> {
+
+        serversListMatchingCpuCount.forEach((key,value)-> {
 
             double totalCost = AllocatorCommonUtil.serverCostByRegion(hours, value, key);
-            if(totalCost < cost) {
+            if(totalCost <= cost) {
                 AllocatorResponse allocatorResponse = new AllocatorResponse(key,totalCost,value);
                 allocatorResponses.add(allocatorResponse);
             }
 
         });
 
-        serverList1.forEach((key,value)-> {
+        serversListMatchingCostAndHours.forEach((key,value)-> {
             int cpuCount = AllocatorCommonUtil.getCpuCount(value);
+
             if(cpuCount >= cpus ) {
+                //If the the region is already present choose the one which returns us most CPU and replace it
                 AllocatorResponse allocatorResponse = new AllocatorResponse(key,cost,value);
-                allocatorResponses.add(allocatorResponse);
+
+                int index = allocatorResponses.indexOf(allocatorResponse);
+                if(index != -1) {
+                    AllocatorResponse existingEntry = allocatorResponses.get(index);
+                    int existingCpus = AllocatorCommonUtil.getCpuCount_1(existingEntry.getServers());
+                    if(existingCpus < cpuCount) {
+                        allocatorResponses.remove(index);
+                        allocatorResponses.add(allocatorResponse);
+                    } else {
+                        allocatorResponse = null;
+                    }
+                }
+
             }
         });
 
