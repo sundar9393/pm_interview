@@ -24,7 +24,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        List<AllocatorResponse> cpus = get_costs(5,214,95);
+        List<AllocatorResponse> cpus = get_costs(520,200,0);
 
 
         //I need to print them in JSON format

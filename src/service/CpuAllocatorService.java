@@ -39,8 +39,8 @@ public class CpuAllocatorService {
     }
 
     /*
-    This method returns a Map with regionName as key and corresponding value which is a Map that holds ServerTypes as
-    key and no of them as value for the corresponding region to cater to certain number of CPUs in optimized way
+    This method returns a Map with regionName as key and corresponding value which is also a Map that holds ServerTypes as
+    key and no of them as value to cater to certain number of CPUs in optimized way
      */
     private static Map<String, Map<ServerType, Integer>> getServersToMatchCpus(int cpuCount) {
 
@@ -59,6 +59,7 @@ public class CpuAllocatorService {
             int len = regionalServers.size();
             int cpuRequired = cpuCount;
 
+
             //iterating against each server in the region in reverse
             // to always chose the server with max cpus that can fit in our requirements
             for(int j = len-1; j >=0; j--) {
@@ -68,7 +69,7 @@ public class CpuAllocatorService {
                 if(serverSize <= cpuRequired) {
                     noOfServers = cpuRequired/serverSize;
                     cpuRequired -= noOfServers*serverSize;
-                    chosenServers.put(s1.getType(),chosenServers.getOrDefault(s1.getType(),0)+noOfServers);
+                    chosenServers.put(s1.getType(),noOfServers);
                 }
 
             }
@@ -163,7 +164,7 @@ public class CpuAllocatorService {
             int cpuCount = AllocatorCommonUtil.getCpuCount(value);
 
             if(cpuCount >= cpus ) {
-                //If the the region is already present choose the one which returns us most CPU and replace it
+                //If the the region is already present choose the entry which returns us most CPU and replace it
                 AllocatorResponse allocatorResponse = new AllocatorResponse(key,cost,value);
 
                 int index = allocatorResponses.indexOf(allocatorResponse);
