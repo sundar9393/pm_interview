@@ -19,7 +19,7 @@ public class CpuAllocatorService {
     This method selects the optimum number of servers from every region to cater the no of cpus requested
     & calculates the cost for them based on region.
      */
-    public final static List<AllocatorResponse> getCpus(int cpu, int hours) {
+    public final List<AllocatorResponse> getCpusByCountForHours(final int cpu, final int hours) {
 
         //Create a list of return objects
         List<AllocatorResponse> allocatorResponses = new LinkedList<>();
@@ -34,6 +34,7 @@ public class CpuAllocatorService {
 
         });
 
+        Collections.sort(allocatorResponses);
         return allocatorResponses;
     }
 
@@ -81,7 +82,7 @@ public class CpuAllocatorService {
     This method calculates maximum CPUS that can be rendered for the specified hours
     costing not more than the capping on cost.
      */
-    public final static List<AllocatorResponse> getCpusByCostAndHours(double cost, int hours) {
+    public final List<AllocatorResponse> getCpusByCostAndHours(final double cost, final int hours) {
 
         //Create a list of return objects
         List<AllocatorResponse> allocatorResponses = new LinkedList<>();
@@ -92,6 +93,7 @@ public class CpuAllocatorService {
             allocatorResponses.add(allocatorResponse);
         });
 
+        Collections.sort(allocatorResponses);
         return allocatorResponses;
     }
 
@@ -136,7 +138,7 @@ public class CpuAllocatorService {
     /*
     The method returns regions which can provide the demanded number of cpus within the cost constraint.
      */
-    public final static List<AllocatorResponse> getCpusByNumbersHoursAndCost(int cpus, int hours, double cost) {
+    public final List<AllocatorResponse> getCpusByNumbersHoursAndCost(final int cpus, final int hours, final double cost) {
 
         //Create a list of return objects
         List<AllocatorResponse> allocatorResponses = new LinkedList<>();
@@ -179,6 +181,7 @@ public class CpuAllocatorService {
             }
         });
 
+        Collections.sort(allocatorResponses);
         return allocatorResponses;
 
     }
